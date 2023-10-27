@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Centered Image with Text</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 100%;
+            max-height: 50%;
+        }
+        .info {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        .color-button {
+            margin: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="ianphoto.jpeg" alt="Centered Image">
+    <div class="info">
+        <p>Name: Ian Ndungu Mwicigi</p>
+        <p>Registration Number: SCT221-0602/2021</p>
+    </div>
+    <table>
+        <tr>
+            <th>Visit Count</th>
+            <th>Preferences</th>
+        </tr>
+        <tr>
+            <td id="visitCount">0</td>
+            <td id="preference">None</td>
+        </tr>
+    </table>
+    <div>
+        <button class="color-button" onclick="setColorPreference('red')">Red</button>
+        <button class="color-button" onclick="setColorPreference('green')">Green</button>
+        <button class="color-button" onclick="setColorPreference('blue')">Blue</button>
+        <button class="color-button" onclick="removeCount()">Remove Visit Count</button>
+        <button class="color-button" onclick="clearAll()">Clear Data</button>
+    </div>
+
+    <script>
+        const localStorage = window.localStorage;
+
+        const initialize = () => {
+            if (localStorage) {
+                const count = localStorage.getItem("visitCount") || 0;
+                const preference = localStorage.getItem("preference") || "None";
+                document.getElementById("visitCount").textContent = count;
+                document.getElementById("preference").textContent = preference;
+                setBodyBackgroundColor(preference); // Set background color on initialization
+            }
+        };
+
+        const setColorPreference = color => {
+            localStorage.setItem("preference", color);
+            document.getElementById("preference").textContent = color;
+            setBodyBackgroundColor(color); // Set background color
+        };
+
+        const setBodyBackgroundColor = color => {
+            document.body.style.background = color;
+        };
+
+        const removeCount = () => {
+            localStorage.removeItem("visitCount");
+            document.getElementById("visitCount").textContent = "0";
+        };
+
+        const clearAll = () => {
+            localStorage.clear();
+            document.getElementById("visitCount").textContent = "0";
+            document.getElementById("preference").textContent = "None";
+            setBodyBackgroundColor("white"); // Reset background color to default
+        };
+
+        initialize();
+    </script>
+</body>
+</html>
+    
